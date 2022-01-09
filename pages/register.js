@@ -26,7 +26,7 @@ const Register = () => {
         <Col sm="12" md={{ size: 5, offset: 3 }}>
           <div className="paper">
             <div className="header">
-                <div className="container"><h1>Sign Up</h1></div>
+                <div className="container"><h1>Sign up</h1></div>
             </div>
             <section className="wrapper">
               {Object.entries(error).length !== 0 &&
