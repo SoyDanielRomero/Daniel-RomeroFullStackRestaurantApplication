@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 # Installing dependencies
 COPY package*.json /usr/src/app/
 RUN npm install
+RUN npm install next
 
 # Copying source files
 COPY . /usr/src/app
@@ -18,4 +19,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Running the app
-CMD "npm" "run" "dev"
+CMD "npm" "run" "start"
