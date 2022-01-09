@@ -14,7 +14,7 @@ RUN npm install
 COPY . /usr/src/app
 
 # Building app
-RUN npx run build
+RUN npm run build
 EXPOSE 3000
 
 # Running the app
