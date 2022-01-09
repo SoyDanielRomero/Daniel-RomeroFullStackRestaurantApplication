@@ -14,9 +14,9 @@ jobs:
 
     steps:
       - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
       - name: Deploy
         uses: udondan/cdk-nodejs@v0.3.1
