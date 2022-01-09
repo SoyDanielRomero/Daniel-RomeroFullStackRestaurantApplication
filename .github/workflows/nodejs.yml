@@ -1,5 +1,5 @@
 name: Deploy CDK
-# BEWARE THIS LAUNCHES MACHISNES ON AWS -- expose the push
+# BEWARE THIS LAUNCHES MACHISNES ON AWS --- expose the push
 on:
   push:
     branches:
