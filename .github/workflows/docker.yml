@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: npm install
-      - run: CI=false npm run build
+      - run: npm run build
       - run: npm start
       - uses: jakejarvis/s3-sync-action@master
         with:
