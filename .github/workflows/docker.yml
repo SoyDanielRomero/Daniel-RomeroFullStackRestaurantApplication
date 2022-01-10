@@ -29,4 +29,4 @@ jobs:
       # - name: Build the tagged Docker image
       #   run: docker build -t capstone:frontend .
       - name: Push the tagged Docker image
-        run: docker push capstone:frontend
+        run: docker push soydanielromero/capstone:frontend
