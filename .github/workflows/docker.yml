@@ -1,35 +1,48 @@
-name: Upload Website
-on:
-  push:
-jobs:
-  build:
+# name: Docker Image CI
+
+# on: push
+# #
+# jobs:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.17.5]
+        node-version: [14.x]
     steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: CI=false npm run build --if-present
-      # - run: npm test
-      # - run: npm start
-        env:
-          CI: true
-  deploy:
-    needs: build
+      - run: npm run build
+      - run: npm test
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: jakejarvis/s3-sync-action@master
+      - name: Checkout code
+      - uses: actions/checkout@v1 # may be actions/checkout@v2 now
         with:
-          args: --acl public-read --follow-symlinks --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          fetch-depth: 1
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} |  docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Get the version
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+      # - name: Build the tagged Docker image
+      #   run: docker build -t soydanielromero/capstone:frontend .
+      - name: Push the tagged Docker image
+        run: docker push capstone:frontend
+        
+
+      - name: Deploy
+        uses: udondan/cdk-nodejs@v0.4.0
+        with:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "us-east-2" # optional: defaults to us-east-1
-          # SOURCE_DIR: 'build' # optional: defaults to entire repository
+          
