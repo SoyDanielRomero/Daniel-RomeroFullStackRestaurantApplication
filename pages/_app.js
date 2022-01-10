@@ -10,7 +10,7 @@ function MyApp(props){
   var {cart,addItem,removeItem, user, setUser} = useContext(AppContext)
   const [state,setState] = useState({cart:cart});
   const { Component, pageProps } = props;
-  
+  console.log("STATE.USER: "+JSON.stringify(state.user))
   
   setUser = (user) => {
     setState({ user });
@@ -83,7 +83,7 @@ function MyApp(props){
   }
 
   return (
-    <AppContext.Provider value={{cart: state.cart, addItem: addItem, removeItem: removeItem,isAuthenticated:false,user:null,setUser:()=>{}}}>
+    <AppContext.Provider value={{cart: state.cart, addItem: addItem, removeItem: removeItem,isAuthenticated:false,user:state.user,setUser:setUser}}>
       <Head>
         <link
           rel="stylesheet"

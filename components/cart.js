@@ -100,10 +100,10 @@ const checkoutItems = ()=>{
             <small>Items:</small>
           </div>
           <div>
-            {renderItems()}
+            { cart ? (renderItems()):(<h5></h5>)}
           </div>
           <div>
-            {checkoutItems()}
+            { cart ? (checkoutItems()):(<h5></h5>)}
           </div>
           
           {console.log(`Router Path: ${router.asPath}`)}
