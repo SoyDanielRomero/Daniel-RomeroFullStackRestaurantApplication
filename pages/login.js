@@ -90,6 +90,7 @@ function Login(props) {
                           .then((res) => {
                             setLoading(false);
                             // set authed User in global context to update header/app state
+                            console.log("USER ABOUT to login: " + JSON.stringify(res.data.user))
                             appContext.setUser(res.data.user);
                             console.log("USER Logged in: " + JSON.stringify(appContext.user))
                           })
