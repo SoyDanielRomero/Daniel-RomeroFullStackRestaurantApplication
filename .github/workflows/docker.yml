@@ -1,17 +1,16 @@
 name: Docker Image CI
 
-on: 
-  push:
+on: push
 #
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.17.5]
+        node-version: [12.x]
     steps:
-      - name: Login to Docker Hub    
-        uses: docker/login-action@v1 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -21,13 +20,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: npm run build
       - run: npm test
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Login to DockerHub Registry
       - uses: actions/checkout@v2 # may be actions/checkout@v2 now
+      - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_TOKEN }} |  docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Get the version
         id: vars
@@ -40,21 +38,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: jakejarvis/s3-sync-action@master
+
+      - name: Deploy
+        uses: udondan/cdk-nodejs@v0.4.0
         with:
-          args: --acl public-read --follow-symlinks --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "us-east-2" # optional: defaults to us-east-1
-      # - name: Deploy
-      #   uses: udondan/cdk-nodejs@v0.4.0
-      #   with:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
