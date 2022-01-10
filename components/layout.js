@@ -9,6 +9,7 @@ import AppContext from "./context";
 const Layout = (props) => {
 const title = "Welcome to Nextjs";
 const {user} = useContext(AppContext);
+console.log("USER Layout: " + JSON.stringify(user))
   return (
     <div>
       <Head>

@@ -7,11 +7,12 @@ import Link from "next/link"
 // the alternative is using useContext as below
 function Cart() {
   let isAuthenticated = true;
-  let {cart,addItem,removeItem} = useContext(AppContext);
+  let {cart,addItem,removeItem, user} = useContext(AppContext);
   //const [cartA, setCartA] = useState({cart})
   //cart = value.cart;
   //console.log('props:'+ JSON.stringify(value));
   console.log(`in CART: ${JSON.stringify(cart)}`)
+  console.log(`USER in CART: ${JSON.stringify(user)}`)
   
   //   problem is that cart may not be set
   const router = useRouter();
