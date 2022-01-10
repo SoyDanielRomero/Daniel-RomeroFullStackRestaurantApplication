@@ -1,36 +1,26 @@
 name: Docker Image CI
 
-on:
-  push:
-
+on: push
 #
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.17.5]
+        node-version: [14.x]
     steps:
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: npm build
+      - run: npm run build --if-present
       - run: npm test
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
       - uses: actions/checkout@v1 # may be actions/checkout@v2 now
-        with:
-          fetch-depth: 1
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_TOKEN }} |  docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Get the version
@@ -40,10 +30,3 @@ jobs:
         run: docker build -t soydanielromero/capstone:frontend .
       - name: Push the tagged Docker image
         run: docker push soydanielromero/capstone:frontend
-        
-
-      - name: Deploy
-        uses: udondan/cdk-nodejs@v0.4.0
-        with:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
