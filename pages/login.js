@@ -91,6 +91,9 @@ function Login(props) {
                             setLoading(false);
                             // set authed User in global context to update header/app state
                             console.log("USER ABOUT to login: " + JSON.stringify(res.data.user))
+                            appContext.cart = {items:[], 
+                              total:0}
+                            console.log("USER LOGGED CART: " + JSON.stringify(appContext.cart))
                             appContext.setUser(res.data.user);
                             console.log("USER Logged in: " + JSON.stringify(appContext.user))
                           })

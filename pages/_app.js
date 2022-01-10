@@ -8,7 +8,9 @@ import Cookie from "js-cookie"
 
 function MyApp(props){
   var {cart,addItem,removeItem, user, setUser} = useContext(AppContext)
+  console.log("APP CONTEXT CART: "+JSON.stringify(cart))
   const [state,setState] = useState({cart:cart});
+  console.log("STATE CART: "+JSON.stringify(state.cart))
   const { Component, pageProps } = props;
   console.log("STATE.USER: "+JSON.stringify(state.user))
   
@@ -16,6 +18,7 @@ function MyApp(props){
     setState({ user });
   };
   addItem = (item) => {
+    console.log("ADD ITEM STATE CART: "+JSON.stringify(state.cart))
     let { items } = state.cart;
     //check for item already in cart
     //if not in cart, add item if item is found increase quanity ++
