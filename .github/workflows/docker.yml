@@ -1,45 +1,44 @@
 name: Docker Image CI
 
-on: 
-  push:
+on: push
 #
-  jobs:
-    test:
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          node-version: [14.x]
-      steps:
-        - name: Login to Docker Hub
-          uses: docker/login-action@v1
-          with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_TOKEN }}
-        - uses: actions/checkout@v2
-        - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-            node-version: ${{ matrix.node-version }}
-        - run: npm install
-        - run: npm run build
-        - run: npm test
-    build:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-        - uses: actions/checkout@v1 # may be actions/checkout@v2 now
-          with:
-            fetch-depth: 1
-        - name: Login to DockerHub Registry
-          run: echo ${{ secrets.DOCKERHUB_TOKEN }} |  docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        - name: Get the version
-          id: vars
-          run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
-        - name: Build the tagged Docker image
-          run: docker build -t soydanielromero/capstone:frontend .
-        - name: Push the tagged Docker image
-          run: docker push soydanielromero/capstone:frontend
-    deploy:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build
+      - run: npm test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+      - uses: actions/checkout@v1 # may be actions/checkout@v2 now
+        with:
+          fetch-depth: 1
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} |  docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Get the version
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+      - name: Build the tagged Docker image
+        run: docker build -t soydanielromero/capstone:frontend .
+      - name: Push the tagged Docker image
+        run: docker push soydanielromero/capstone:frontend
+  deploy:
       needs: build
       runs-on: ubuntu-latest
       steps:
