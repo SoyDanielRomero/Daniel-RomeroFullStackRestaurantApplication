@@ -34,7 +34,7 @@
 #       - name: Push the tagged Docker image
 #         run: docker push soydanielromero/capstone:frontend
 
-name: Docker Image CI
+name: Docker Image CI-2
 
 on:
   push:
