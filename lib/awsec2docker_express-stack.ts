@@ -25,7 +25,7 @@ export class Awsec2dockerExpressStack extends cdk.Stack {
   });
 
   helloContainer.addPortMappings({
-    containerPort: 3000
+    containerPort: 80
   });
 
   const helloService = new ecs.Ec2Service(this, 'hello-service', {
