@@ -31,6 +31,7 @@ function RestaurantList(props){
       }
     }
   `;
+  
   const { loading, error, data } = useQuery(GET_RESTAURANTS)
   if (loading) return <p>Loading...</p>;
   if (error) return <p>ERROR</p>;
