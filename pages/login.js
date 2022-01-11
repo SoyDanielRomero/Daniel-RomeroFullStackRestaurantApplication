@@ -94,6 +94,7 @@ function Login(props) {
                             appContext.cart = {items:[], 
                               total:0}
                             console.log("USER LOGGED CART: " + JSON.stringify(appContext.cart))
+                            alert('You have signed in')
                             appContext.setUser(res.data.user);
                             console.log("USER Logged in: " + JSON.stringify(appContext.user))
                           })

@@ -57,6 +57,7 @@ console.log("USER Layout: " + JSON.stringify(user))
                 <a
                   className="nav-link"
                   onClick={() => {
+                    alert('You are loggin out')
                     logout();
                     setUser(null);
                   }}

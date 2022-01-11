@@ -52,9 +52,11 @@ function CheckoutForm() {
       }),
     });
 
+    alert('Order created')
+
     if (!response.ok) {
       setError(response.statusText);
-      console.log("SUCCESS")
+      console.log("ERROR")
     }
 
     // OTHER stripe methods you can use depending on app

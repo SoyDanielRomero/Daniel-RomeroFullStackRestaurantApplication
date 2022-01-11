@@ -14,6 +14,7 @@ RUN npm install --silent
 COPY . /usr/src/app
 
 # Building app
+RUN npm cache clean --force 
 RUN npm run build
 EXPOSE 3000
 

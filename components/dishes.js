@@ -13,7 +13,7 @@ import {
   Col} from "reactstrap";
 function Dishes({restId}){
   const [restaurantID, setRestaurantID] = useState()
-  const {addItem} = useContext(AppContext)
+  const {addItem, user} = useContext(AppContext)
 
 const GET_RESTAURANT_DISHES = gql`
   query($id: ID!) {
@@ -62,13 +62,14 @@ const GET_RESTAURANT_DISHES = gql`
                   <CardText>{res.description}</CardText>
                 </CardBody>
                 <div className="card-footer">
-                  <Button color="info"
+                  { user ? (<Button color="info"
                     outline
                     color="primary"
                     onClick = {()=> addItem(res)}
                   >
                     + Add To Cart
-                  </Button>
+                  </Button>):(<h5></h5>)}
+                  
                   
                 </div>
               </Card>
