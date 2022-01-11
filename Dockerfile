@@ -1,5 +1,4 @@
 FROM node:14.17.5
-ENV NODE_ENV=production
 ENV  PORT=3000
 
 # Create app directory
@@ -8,13 +7,12 @@ WORKDIR /usr/src/app
 
 # Installing dependencies
 COPY package*.json /usr/src/app/
-RUN npm install --silent
+RUN CI=true npm install
 
 # Copying source files
 COPY . /usr/src/app
 
 # Building app
-RUN npm cache clean --force 
 RUN npm run build
 EXPOSE 3000
 
