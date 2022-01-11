@@ -7,8 +7,8 @@ WORKDIR /usr/src/app
 
 # Installing dependencies
 COPY package*.json /usr/src/app/
-RUN CI=true yarn install
-RUN CI=true yarn install next
+RUN yarn install --frozen-lockfile
+# RUN yarn install next
 
 FROM node:lts as builder
 WORKDIR /usr/src/app
