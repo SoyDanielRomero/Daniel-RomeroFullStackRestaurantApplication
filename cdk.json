@@ -1,3 +1,0 @@
-{
-  "app": "node bin/awsec2docker_express.ts"
-}
