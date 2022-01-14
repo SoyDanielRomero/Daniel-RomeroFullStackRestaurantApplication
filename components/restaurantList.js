@@ -43,12 +43,17 @@ let searchQuery = data.restaurants.filter((res) =>{
   })
 
 let restId = searchQuery[0].id
- 
+
+
 // definet renderer for Dishes
   const renderDishes = (restaurantID) => {
+    
     return (<Dishes restId={restaurantID}> </Dishes>)
   };
+
+  
 if(searchQuery.length > 0){
+
   const restList = searchQuery.map((res) => (
     <Col xs="6" sm="4" key={res.id}>
       <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
@@ -69,6 +74,7 @@ if(searchQuery.length > 0){
         </div>
       </Card>
     </Col>
+
   ))
 
   return(

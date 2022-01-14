@@ -61,7 +61,8 @@ const GET_RESTAURANT_DISHES = gql`
                   <CardTitle>{res.name}</CardTitle>
                   <CardText>{res.description}</CardText>
                 </CardBody>
-                <div className="card-footer">
+                { user ? (<div className="card-footer">
+                
                   <Button color="info"
                     outline
                     color="primary"
@@ -71,7 +72,7 @@ const GET_RESTAURANT_DISHES = gql`
                   </Button>
                   
                   
-                </div>
+                </div>):(<></>)}
               </Card>
             </Col>
           ))}

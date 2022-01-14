@@ -111,7 +111,7 @@ const checkoutItems = ()=>{
           {console.log(`Router Path: ${router.asPath}`)}
         </CardBody>
       </Card>
-      </div>):(<h5></h5>)}
+      </div>):(<></>)}
       <style jsx>{`
         #item-price {
           font-size: 1.3em;
