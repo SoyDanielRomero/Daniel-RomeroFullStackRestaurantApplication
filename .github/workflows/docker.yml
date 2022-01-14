@@ -27,8 +27,7 @@ jobs:
           awsRegion: 'us-east-1'
           action: 'sync' # sync|clean
           srcDir: './out' # required only if action is sync
-          filesGlob: '**/*.html' # required only if action is sync
-          prefix: 'preview'
+          filesGlob: '**/*.*' # required only if action is sync
           sync-strategy: |
             ETag
             Content-Type
